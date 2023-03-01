@@ -9,6 +9,7 @@ import {
 } from "typeorm";
 import { User } from "./User";
 import BaseEntity from "./Entity";
+import Post from "./Post";
 
 @Entity("subs")
 export default class Sub extends BaseEntity {
