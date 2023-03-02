@@ -11,8 +11,19 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState<any>({});
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+
+    try {
+      await axios.post(
+        "/auth/login",
+        { password, username },
+        { withCredentials: true }
+      );
+    } catch (error: any) {
+      console.log(error);
+      setErrors(error.response.data || {});
+    }
   };
 
   return (
