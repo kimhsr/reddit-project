@@ -7,7 +7,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   Axios.defaults.baseURL = process.env.NEXT_PUBLIC_SERVER_BASE_URL + "/api";
   return (
     <AuthProvider>
-      <Component {...pageProps} />;
+      <Component {...pageProps} />
     </AuthProvider>
   );
 }
