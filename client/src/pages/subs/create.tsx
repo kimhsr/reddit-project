@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import React, { FormEvent, useState } from "react";
 import InputGroup from "../../components/InputGroup";
 
-const create = () => {
+const SubCreate = () => {
   const [name, setName] = useState("");
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -77,7 +77,7 @@ const create = () => {
   );
 };
 
-export default create;
+export default SubCreate;
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   try {

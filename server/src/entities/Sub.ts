@@ -34,9 +34,10 @@ export default class Sub extends BaseEntity {
 
   @ManyToOne(() => User)
   @JoinColumn({ name: "username", referencedColumnName: "username" })
+  user: User;
+
   @OneToMany(() => Post, (post) => post.sub)
   posts: Post[];
-  user: User;
 
   @Expose()
   get imageUrl(): string {
