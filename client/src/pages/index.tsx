@@ -1,8 +1,18 @@
+import axios from "axios";
 import Link from "next/link";
 import React from "react";
 import styles from "../styles/Home.module.css";
+import { Sub } from "../types";
+import useSWR from "swr";
 
 const index = () => {
+  const fetcher = async (url: string) => {
+    return await axios.get(url).then((res) => res.data);
+  };
+  const address = "http://localhost:4000/api/subs/sub/topSubs";
+  const { data: topSubs } = useSWR<Sub[]>(address, fetcher);
+  console.log("topSubs", topSubs);
+
   return (
     <div className="flex max-w-5xl px-4 pt-5 mx-auto">
       {/* 포스트 리스트 */}
