@@ -25,7 +25,24 @@ const SubPage = () => {
     fetcher
   );
 
-  const uploadImage = () => {};
+  const uploadImage = async (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files === null) return;
+
+    const file = e.target.files[0];
+    console.log("file", file);
+
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("type", fileInputRef.current!.name);
+
+    try {
+      await axios.post(`/subs/${sub.name}/upload`, formData, {
+        headers: { "Context-Type": "multipart/form-data" },
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   // 자신의 커뮤니티(sub) 일 때만 클릭 가능하게
   useEffect(() => {
