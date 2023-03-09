@@ -21,6 +21,8 @@ const SubPage = () => {
     fetcher
   );
 
+  console.log("sub", sub);
+
   return (
     <>
       {sub && (
