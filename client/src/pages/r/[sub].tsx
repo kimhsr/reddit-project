@@ -1,10 +1,14 @@
 import axios from "axios";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import React from "react";
+import React, { ChangeEvent, useEffect, useRef, useState } from "react";
 import useSWR from "swr";
+import { useAuthState } from "../../context/auth";
 
 const SubPage = () => {
+  const [ownSub, setOwnSub] = useState(false);
+  const { authenticated, user } = useAuthState();
+
   const fetcher = async (url: string) => {
     try {
       const res = await axios.get(url);
@@ -13,7 +17,7 @@ const SubPage = () => {
       throw error.response.data;
     }
   };
-
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
   const subName = router.query.sub;
   const { data: sub, error } = useSWR(
@@ -21,13 +25,35 @@ const SubPage = () => {
     fetcher
   );
 
-  console.log("sub", sub);
+  const uploadImage = () => {};
+
+  // 자신의 커뮤니티(sub) 일 때만 클릭 가능하게
+  useEffect(() => {
+    if (!sub || !user) return;
+    setOwnSub(authenticated && user.username === sub.username);
+  }, [sub]);
+
+  const openFileInput = (type: string) => {
+    // 자신의 커뮤니티(sub) 일 때만 클릭 가능하게
+    if (!ownSub) return;
+    const fileInput = fileInputRef.current;
+    if (fileInput) {
+      fileInput.name = type;
+      fileInput.click();
+    }
+  };
 
   return (
     <>
       {sub && (
         <>
           <div>
+            <input
+              type="file"
+              hidden={true}
+              ref={fileInputRef}
+              onChange={uploadImage}
+            />
             {/* 배너 이미지 */}
             <div className="bg-gray-400">
               {sub.bannerUrl ? (
@@ -39,9 +65,13 @@ const SubPage = () => {
                     backgroundSize: "cover",
                     backgroundPosition: "center",
                   }}
+                  onClick={() => openFileInput("banner")}
                 ></div>
               ) : (
-                <div className="h-20 bg-gray-400"></div>
+                <div
+                  className="h-20 bg-gray-400"
+                  onClick={() => openFileInput("banner")}
+                ></div>
               )}
             </div>
             {/* z커뮤니티 메타 데이터 */}
@@ -55,6 +85,7 @@ const SubPage = () => {
                       width={70}
                       height={70}
                       className="rounded-full"
+                      onClick={() => openFileInput("image")}
                     />
                   )}
                 </div>
