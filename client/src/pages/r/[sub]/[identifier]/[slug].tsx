@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import React, { FormEvent, useState } from "react";
 import useSWR from "swr";
 import { useAuthState } from "../../../../context/auth";
-import { Post } from "../../../../types";
+import { Comment, Post } from "../../../../types";
 
 const PostPage = () => {
   const router = useRouter();
@@ -15,6 +15,11 @@ const PostPage = () => {
   const { data: post, error } = useSWR<Post>(
     identifier && slug ? `/posts/${identifier}/${slug}` : null
   );
+  const { data: comments } = useSWR<Comment[]>(
+    identifier && slug ? `/posts/${identifier}/${slug}/comments` : null
+  );
+
+  console.log("comment", comments);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -66,49 +71,70 @@ const PostPage = () => {
                   </div>
                 </div>
               </div>
-              <div>
-                {/* 댓글 작성 구간 */}
-                <div className="pr-6 mb-4">
-                  {authenticated ? (
-                    <div>
-                      <p className="mb-1 text-xs">
-                        <Link href={`/u/${user?.username}`}>
-                          <a className="font-semibold text-blue-500">
-                            {user?.username}
-                          </a>
-                        </Link>{" "}
-                        으로 댓글 작성
-                      </p>
-                      <form onSubmit={handleSubmit}>
-                        <textarea
-                          className="w-full p-3 border border-gray-300 rounded focus:outline-none focus:border-gray-600"
-                          onChange={(e) => setNewComment(e.target.value)}
-                          value={newComment}
-                        ></textarea>
-                        <div className="flex justify-end">
-                          <button
-                            className="px-3 py-1 text-white bg-gray-400 rounded"
-                            disabled={newComment.trim() === ""}
-                          >
-                            댓글 작성
-                          </button>
-                        </div>
-                      </form>
-                    </div>
-                  ) : (
-                    <div className="flex items-center justify-between px-2 py-4 border border-gray-200 rounded">
-                      <p className="font-semibold text-gray-400">
-                        댓글 작성을 위해서 로그인 해주세요.
-                      </p>
-                      <div>
-                        <Link href={`/login`}>
-                          <a className="px-3 py-1 text-white bg-gray-400 rounded"></a>
-                        </Link>
+
+              {/* 댓글 작성 구간 */}
+              <div className="pr-6 mb-4">
+                {authenticated ? (
+                  <div>
+                    <p className="mb-1 text-xs">
+                      <Link href={`/u/${user?.username}`}>
+                        <a className="font-semibold text-blue-500">
+                          {user?.username}
+                        </a>
+                      </Link>{" "}
+                      으로 댓글 작성
+                    </p>
+                    <form onSubmit={handleSubmit}>
+                      <textarea
+                        className="w-full p-3 border border-gray-300 rounded focus:outline-none focus:border-gray-600"
+                        onChange={(e) => setNewComment(e.target.value)}
+                        value={newComment}
+                      ></textarea>
+                      <div className="flex justify-end">
+                        <button
+                          className="px-3 py-1 text-white bg-gray-400 rounded"
+                          disabled={newComment.trim() === ""}
+                        >
+                          댓글 작성
+                        </button>
                       </div>
+                    </form>
+                  </div>
+                ) : (
+                  <div className="flex items-center justify-between px-2 py-4 border border-gray-200 rounded">
+                    <p className="font-semibold text-gray-400">
+                      댓글 작성을 위해서 로그인 해주세요.
+                    </p>
+                    <div>
+                      <Link href={`/login`}>
+                        <a className="px-3 py-1 text-white bg-gray-400 rounded"></a>
+                      </Link>
                     </div>
-                  )}
-                </div>
+                  </div>
+                )}
               </div>
+              {/* 댓글 리스트 부분 */}
+              {comments?.map((comment) => (
+                <div className="flex" key={comment.identifier}>
+                  <div className="py-2 pr-2">
+                    <p className="mb-1 text-xs leading-none">
+                      <Link href={`/u/${comment.username}`}>
+                        <a className="mr-1 font-bold hover:underline">
+                          {comment.username}
+                        </a>
+                      </Link>
+                      <span className="text-gray-600">
+                        {`
+                          ${comment.voteScore}
+                          posts
+                          ${dayjs(comment.createdAt).format("YYYY-MM-DD HH:mm")}
+                        `}
+                      </span>
+                    </p>
+                    <p>{comment.body}</p>
+                  </div>
+                </div>
+              ))}
             </>
           )}
         </div>
