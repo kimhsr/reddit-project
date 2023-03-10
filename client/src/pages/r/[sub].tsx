@@ -14,7 +14,11 @@ const SubPage = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
   const subName = router.query.sub;
-  const { data: sub, error } = useSWR(subName ? `/subs/${subName}` : null);
+  const {
+    data: sub,
+    error,
+    mutate,
+  } = useSWR(subName ? `/subs/${subName}` : null);
 
   const uploadImage = async (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files === null) return;
@@ -60,7 +64,7 @@ const SubPage = () => {
     );
   } else {
     renderPosts = sub.posts.map((post: Post) => (
-      <PostCard key={post.identifier} post={post} />
+      <PostCard key={post.identifier} post={post} subMutate={mutate} />
     ));
   }
 
