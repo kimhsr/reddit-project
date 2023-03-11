@@ -2,11 +2,12 @@ import axios from "axios";
 import Link from "next/link";
 import React from "react";
 import styles from "../styles/Home.module.css";
-import { Sub } from "../types";
+import { Post, Sub } from "../types";
 import useSWR from "swr";
 import Image from "next/image";
 import { NextPage } from "next";
 import { useAuthState } from "../context/auth";
+import useSWRInfinite from "swr/infinite";
 
 const Home: NextPage = () => {
   const { authenticated } = useAuthState();
@@ -15,6 +16,24 @@ const Home: NextPage = () => {
     return await axios.get(url).then((res) => res.data);
   };
   const address = "http://localhost:4000/api/subs/sub/topSubs";
+
+  // 각 페이지의 SWR 키를 얻기 위한 함수,
+  // 'fetcher'에 의해 허용된 값을 반환합니다.
+  // 'null'이 반환된다면, 페이지의 요청은 시작되지 않습니다
+  const getKey = (pageIndex: number, previousPageData: Post[]) => {
+    if (previousPageData && !previousPageData.length) return null; // 끝에 도달
+    return `/posts?page=${pageIndex}`; // SWR key
+  };
+
+  const {
+    data,
+    error,
+    size: page,
+    setSize: setPage,
+    isValidating,
+    mutate,
+  } = useSWRInfinite<Post[]>(getKey);
+
   const { data: topSubs } = useSWR<Sub[]>(address, fetcher);
 
   return (
