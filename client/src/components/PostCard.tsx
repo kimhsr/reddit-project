@@ -101,7 +101,7 @@ const PostCard = ({
 
         <p className="text-xs text-gray-400">
           Posted by
-          <Link href={`/r/${username}`}>
+          <Link href={`/u/${username}`}>
             <a className="mx-1 hover:underline">/u/{username}</a>
           </Link>
           <Link href={url}>
