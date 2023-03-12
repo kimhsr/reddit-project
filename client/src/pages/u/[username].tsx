@@ -28,7 +28,7 @@ const UserPage = () => {
                 key={comment.identifier}
                 className="flex my-4 bg-white rounded"
               >
-                <div className="flex-shrink-0 w-10 py-10 text-center bg-gray-200 rounded-l">
+                <div className="flex-shrink-0 w-10 py-10 text-center bg-white border-r rounded-l">
                   <i className="text-gray-500 fas fa-comment-alt fa-xs"></i>
                 </div>
                 <div className="w-full p-2">
@@ -37,14 +37,14 @@ const UserPage = () => {
                       <a className="cursor-pointer hover:underline">
                         {comment.username}
                       </a>
-                    </Link>
-                    <span>commented on</span>
+                    </Link>{" "}
+                    <span>commented on</span>{" "}
                     <Link href={`/u/${comment.post?.url}`}>
                       <a className="cursor-pointer font-semibold hover:underline">
                         {comment.post?.title}
                       </a>
-                    </Link>
-                    <span>*</span>
+                    </Link>{" "}
+                    <span>•</span>{" "}
                     <Link href={`/u/${comment.post?.subName}`}>
                       <a className="cursor-pointer text-black hover:underline">
                         /r/{comment.post?.subName}
@@ -71,7 +71,7 @@ const UserPage = () => {
           />
           <p className="pl-2 text-md">{data.user.username}</p>
         </div>
-        <div>
+        <div className="p-2 bg-white rounded-b">
           <p>{dayjs(data.user.createdAt).format("YYYY.MM.DD")} 가입</p>
         </div>
       </div>

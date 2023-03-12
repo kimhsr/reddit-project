@@ -77,39 +77,41 @@ const PostCard = ({
       </div>
       {/* 포스트 데이터 부분 */}
       <div className="w-full p-2">
-        {!isInSubPage && (
-          <div className="flex items-center">
-            <Link href={`/r/${subName}`}>
-              <a>
-                <Image
-                  src={sub?.imageUrl}
-                  alt="sub"
-                  className="rounded-full cursor-pointer"
-                  width={12}
-                  height={12}
-                />
-              </a>
-            </Link>
-            <Link href={`/r/${subName}`}>
-              <a className="ml-2 text-xs font-bold cursor-pointer hover:underline">
-                /r/{subName}
-              </a>
-            </Link>
-            <span className="mx-1 text-xs text-gray-400">•</span>
-          </div>
-        )}
+        <div className="flex items-center">
+          {!isInSubPage && (
+            <div className="flex items-center">
+              <Link href={`/r/${subName}`}>
+                <a>
+                  <Image
+                    src={sub?.imageUrl}
+                    alt="sub"
+                    className="rounded-full cursor-pointer"
+                    width={12}
+                    height={12}
+                  />
+                </a>
+              </Link>
+              <Link href={`/r/${subName}`}>
+                <a className="ml-2 text-xs font-bold cursor-pointer hover:underline">
+                  /r/{subName}
+                </a>
+              </Link>
+              <span className="mx-1 text-xs text-gray-400">•</span>
+            </div>
+          )}
 
-        <p className="text-xs text-gray-400">
-          Posted by
-          <Link href={`/u/${username}`}>
-            <a className="mx-1 hover:underline">/u/{username}</a>
-          </Link>
-          <Link href={url}>
-            <a className="mx-1 hover:underline">
-              {dayjs(createdAt).format("YYYY-MM-DD HH:mm")}
-            </a>
-          </Link>
-        </p>
+          <p className="text-xs text-gray-400">
+            Posted by
+            <Link href={`/u/${username}`}>
+              <a className="mx-1 hover:underline">/u/{username}</a>
+            </Link>
+            <Link href={url}>
+              <a className="mx-1 hover:underline">
+                {dayjs(createdAt).format("YYYY-MM-DD HH:mm")}
+              </a>
+            </Link>
+          </p>
+        </div>
         <Link href={url}>
           <a className="my-1 text-lg font-medium">{title}</a>
         </Link>
