@@ -47,11 +47,11 @@ export default class Post extends BaseEntity {
   sub: Sub;
 
   @Exclude()
-  @OneToMany(() => Comment, (comment) => comment.post)
+  @OneToMany(() => Comment, (comment) => comment.post, { onDelete: "CASCADE" })
   comments: Comment[];
 
   @Exclude()
-  @OneToMany(() => Vote, (vote) => vote.post)
+  @OneToMany(() => Vote, (vote) => vote.post, { onDelete: "CASCADE" })
   votes: Vote[];
 
   @Expose() get url(): string {

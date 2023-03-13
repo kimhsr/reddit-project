@@ -114,8 +114,33 @@ const createPostComment = async (req: Request, res: Response) => {
   }
 };
 
+const deletePost = async (req: Request, res: Response) => {
+  const user = res.locals.user;
+  if (!user) {
+    return res.status(403).json({ error: "자신의 글만 삭제할 수 있습니다" });
+  }
+  const { identifier, slug, postId } = req.params;
+  try {
+    const post = await Post.findOneByOrFail({
+      identifier,
+      slug,
+      id: parseInt(postId, 10),
+    });
+    if (post.user.username !== user.username) {
+      return res.status(403).json({ error: "자신의 글만 삭제할 수 있습니다" });
+    }
+    await Post.delete(post.id);
+
+    return res.json({ deletedId: post.id });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ error: "문제가 발생했습니다." });
+  }
+};
+
 const router = Router();
 router.get("/:identifier/:slug", userMiddleware, getPost);
+router.delete("/:identifier/:slug/:postId", userMiddleware, deletePost);
 router.post("/", userMiddleware, authMiddleware, createPost);
 
 router.get("/", userMiddleware, getPosts);
