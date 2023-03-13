@@ -53,6 +53,7 @@ const Login = () => {
               value={password}
               setValue={setPassword}
               error={errors.password}
+              type="password"
             />
             <button className="w-full py-3 mb-1 text-xs font-bold text-white uppercase bg-gray-400 border border-gray-400 rounded">
               로그인
