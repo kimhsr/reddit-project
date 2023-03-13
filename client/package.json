@@ -8,6 +8,7 @@
     "build:dev": "env-cmd -f .env.development next build",
     "build:prod": "env-cmd -f .env.production next build",
     "start:dev": "env-cmd -f .env.development next start",
+    "prestart:prod": "npm run build:prod",
     "start:prod": "env-cmd -f .env.production next start",
     "lint": "next lint"
   },
