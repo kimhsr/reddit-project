@@ -16,7 +16,7 @@ const Home: NextPage = () => {
   const fetcher = async (url: string) => {
     return await axios.get(url).then((res) => res.data);
   };
-  const address = "http://localhost:4000/api/subs/sub/topSubs";
+  const address = "/subs/sub/topSubs";
 
   // 각 페이지의 SWR 키를 얻기 위한 함수,
   // 'fetcher'에 의해 허용된 값을 반환합니다.
