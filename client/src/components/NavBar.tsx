@@ -33,16 +33,6 @@ const NavBar: React.FC = () => {
           </a>
         </Link>
       </span>
-      <div className="max-w-full px-4">
-        <div className="relative flex items-center bg-gray-100 border rounded hover:border-gray-700 hover:bg-white">
-          <FaSearch className="ml-2 text-gray-400" />
-          <input
-            type="text"
-            placeholder="Search Reddit"
-            className="px-3 py-1 bg-transparent h-7 rounded focus:outline-none"
-          />
-        </div>
-      </div>
 
       <div className="flex">
         {!loading &&
