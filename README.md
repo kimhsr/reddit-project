@@ -25,3 +25,20 @@ Next.js, Typescript, Tailwind CSS, ExpressJS, Postgres, Doker
 
 ## Overview
 <img width="80%" src="https://user-images.githubusercontent.com/97604805/225313869-01d10a5a-f092-4be5-8860-135aa0d15fe3.png"/>
+
+<img width="80%" src="https://user-images.githubusercontent.com/97604805/226570210-b8bbe73d-1e8c-4a75-a2e8-613073a7f774.png"/>
+
+
+<img width="80%" src="https://user-images.githubusercontent.com/97604805/226570399-762aae4c-fb4b-4332-9b59-7073d44e483a.png"/>
+
+
+<img width="80%" src="https://user-images.githubusercontent.com/97604805/226570452-3203972d-50f0-476f-88b1-c26d407403b7.png"/>
+
+
+<img width="80%" src="https://user-images.githubusercontent.com/97604805/226570525-abde7add-6919-46c5-ab52-fd81824d37fd.png"/>
+
+
+<img width="80%" src="https://user-images.githubusercontent.com/97604805/226570613-245346dc-0077-49d6-b264-5e1a90f03f91.png"/>
+
+
+<img width="80%" src="https://user-images.githubusercontent.com/97604805/226570620-0fb09672-3f12-4693-8dcc-55c834e4ce0f.png"/>
